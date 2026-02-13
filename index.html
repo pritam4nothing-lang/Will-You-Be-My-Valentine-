@@ -27,10 +27,6 @@ body{
   position:relative;
 }
 
-h2{
-  margin-bottom:15px;
-}
-
 #message{
   height:30px;
   margin-bottom:15px;
@@ -39,11 +35,12 @@ h2{
 
 .buttons{
   position:relative;
-  height:120px;
+  height:130px;
 }
 
 button{
-  padding:10px 25px;
+  width:110px;              /* FIXED WIDTH */
+  height:40px;              /* FIXED HEIGHT */
   border:none;
   border-radius:20px;
   font-size:16px;
@@ -55,16 +52,16 @@ button{
   background:#ff2e63;
   color:white;
   left:50%;
-  transform:translateX(-50%);
-  bottom:60px;
+  margin-left:-55px;        /* center without transform */
+  top:20px;
 }
 
 #noBtn{
   background:white;
   color:#ff2e63;
   left:50%;
-  transform:translateX(-50%);
-  bottom:10px;
+  margin-left:-55px;        /* center without transform */
+  top:70px;
 }
 
 #letterPage{
@@ -86,7 +83,7 @@ button{
   <h2>Will You Be My Valentine? 💌</h2>
   <div id="message"></div>
 
-  <div class="buttons">
+  <div class="buttons" id="btnContainer">
     <button id="yesBtn">Yes ❤️</button>
     <button id="noBtn">No 💔</button>
   </div>
@@ -108,6 +105,7 @@ button{
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 const message = document.getElementById("message");
+const container = document.getElementById("btnContainer");
 const card = document.getElementById("card");
 const letterPage = document.getElementById("letterPage");
 
@@ -119,19 +117,16 @@ const texts = [
   "Think again... 😔"
 ];
 
-// YES
 yesBtn.onclick = () => {
   card.style.display = "none";
   letterPage.style.display = "block";
 };
 
-// NO
 noBtn.addEventListener("click", function(){
 
   if(count < 3){
     message.innerText = texts[count];
-  } 
-  else {
+  } else {
     message.innerText = "Catch me if you can 😜";
     moveButton();
   }
@@ -140,7 +135,6 @@ noBtn.addEventListener("click", function(){
 });
 
 function moveButton(){
-  const container = document.querySelector(".buttons");
   const rect = container.getBoundingClientRect();
 
   const maxX = rect.width - noBtn.offsetWidth;
