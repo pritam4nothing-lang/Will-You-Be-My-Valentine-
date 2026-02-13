@@ -13,28 +13,33 @@ body{
   justify-content:center;
   align-items:center;
   font-family:Arial, sans-serif;
-  overflow:hidden;
 }
 
 .card{
+  width:90%;
+  max-width:350px;
   background:rgba(255,255,255,0.2);
   backdrop-filter:blur(15px);
-  padding:35px;
+  padding:30px;
   border-radius:25px;
   text-align:center;
-  width:320px;
   color:white;
   position:relative;
 }
 
 h2{
-  margin-bottom:10px;
+  margin-bottom:15px;
 }
 
 #message{
-  height:24px;
+  height:30px;
+  margin-bottom:15px;
   font-size:14px;
-  margin-bottom:10px;
+}
+
+.buttons{
+  position:relative;
+  height:120px;
 }
 
 button{
@@ -51,7 +56,7 @@ button{
   color:white;
   left:50%;
   transform:translateX(-50%);
-  bottom:70px;
+  bottom:60px;
 }
 
 #noBtn{
@@ -59,7 +64,7 @@ button{
   color:#ff2e63;
   left:50%;
   transform:translateX(-50%);
-  bottom:20px;
+  bottom:10px;
 }
 
 #letterPage{
@@ -80,8 +85,11 @@ button{
 <div class="card" id="card">
   <h2>Will You Be My Valentine? 💌</h2>
   <div id="message"></div>
-  <button id="yesBtn">Yes ❤️</button>
-  <button id="noBtn">No 💔</button>
+
+  <div class="buttons">
+    <button id="yesBtn">Yes ❤️</button>
+    <button id="noBtn">No 💔</button>
+  </div>
 </div>
 
 <div id="letterPage">
@@ -99,17 +107,16 @@ button{
 <script>
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
+const message = document.getElementById("message");
 const card = document.getElementById("card");
 const letterPage = document.getElementById("letterPage");
-const message = document.getElementById("message");
 
 let count = 0;
 
 const texts = [
   "Are you sure? 🥺",
   "Please reconsider... 🥹",
-  "Think again... 😔",
-  "Last chance 😏"
+  "Think again... 😔"
 ];
 
 // YES
@@ -118,25 +125,26 @@ yesBtn.onclick = () => {
   letterPage.style.display = "block";
 };
 
-// NO (mobile touch dodge)
-noBtn.addEventListener("touchstart", function(e){
-  e.preventDefault();
+// NO
+noBtn.addEventListener("click", function(){
 
-  if(count < texts.length){
+  if(count < 3){
     message.innerText = texts[count];
-  } else {
-    message.innerText = "You can't catch me 😜";
+  } 
+  else {
+    message.innerText = "Catch me if you can 😜";
+    moveButton();
   }
 
   count++;
-  moveButton();
 });
 
 function moveButton(){
-  const cardRect = card.getBoundingClientRect();
+  const container = document.querySelector(".buttons");
+  const rect = container.getBoundingClientRect();
 
-  const maxX = cardRect.width - noBtn.offsetWidth;
-  const maxY = cardRect.height - noBtn.offsetHeight - 80;
+  const maxX = rect.width - noBtn.offsetWidth;
+  const maxY = rect.height - noBtn.offsetHeight;
 
   const randomX = Math.random() * maxX;
   const randomY = Math.random() * maxY;
